@@ -6,11 +6,12 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:38:49 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/25 19:34:56 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/26 20:03:07 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
+
 
 int ft_count_word(char *line)
 {
@@ -44,6 +45,7 @@ int ft_count_word(char *line)
 		i++;
 		if (line[i] && line[i] == d)
 		{
+            d = '\0';
 			k = 0;
 			i++;
 		}
@@ -87,7 +89,6 @@ char *ft_alloc_and_cpy(char *s, int *i)
                 (*i)++;
             if (!s[*i])
                 return (ft_substr(s, start, *i - start));
-            (*i)++;
         }
         if (s[*i + 1] <= 32 || ft_strrchr("><", s[*i + 1]) || s[*i + 1] == '|')
         {
@@ -167,4 +168,3 @@ void	tokenization(char *line, t_input **tok)
         i++;
     }
 }
-

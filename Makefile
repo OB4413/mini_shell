@@ -2,7 +2,7 @@ programe = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-src = minishell.c Tokenization.c
+src = minishell.c Tokenization.c Variable_Expansion.c
 obj = $(src:.c=.o)
 libft = libft/libft.a
 

@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:56:27 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/25 17:09:59 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/26 19:47:14 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef enum e_input_type
 {
@@ -41,6 +42,14 @@ typedef struct s_input
 	struct s_input	*next;
 }					t_input;
 
+typedef struct s_list_env
+{
+	char			*key;
+	char			*value;
+	struct s_list_env	*next;
+}					list_env;
+
 void	tokenization(char *line, t_input **tok);
+void	expand_variables(t_input **tok, list_env *env);
 
 #endif
