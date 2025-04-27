@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:38:49 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/26 20:03:07 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/27 09:46:13 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	tokenization(char *line, t_input **tok)
         new->value = ft_strdup(p[i]);
         chosse_type(&new);
         new->next = NULL;
-        if (i == 0)
+        if (*tok == NULL)
             *tok = new;
         else
         {

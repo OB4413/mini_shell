@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:56:27 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/26 19:47:14 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/27 09:23:14 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,21 @@ typedef struct s_list_env
 	char			*value;
 	struct s_list_env	*next;
 }					list_env;
+
+typedef struct s_redir
+{
+    char *filename;
+    int   type;
+    struct s_redir *next;
+}					t_redir;
+
+typedef struct s_command
+{
+	char    *cmd;
+    char    **args;
+    t_redir *inoutfile;
+    struct s_command *next;
+}					t_command;
 
 void	tokenization(char *line, t_input **tok);
 void	expand_variables(t_input **tok, list_env *env);
