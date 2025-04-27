@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 08:06:45 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/26 20:04:27 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/27 08:05:07 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void expand_variables(t_input **tok, list_env *env)
 		{
 			while (temp->value[i])
 			{
-				if (temp->value[i] == '$')
+				if (temp->value[i] == '$' && temp->value[i + 1] && temp->value[i + 1] != '?')
 				{
 					i++;
 					start = i;

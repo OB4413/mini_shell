@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:56:34 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/26 20:04:17 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/27 07:52:23 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,13 @@ int	main(int ac, char **av, char **env)
 			tokenization(line, &tok);
 			ft_list_env(env, &env_list);
 			expand_variables(&tok, env_list);
+
+			while (tok)
+			{
+				printf("Token: %s\n", tok->value);
+				printf("Type: %d\n", tok->type);
+				tok = tok->next;
+			}
 
 			pid_t pid = fork();
             if (pid == 0)
