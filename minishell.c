@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:56:34 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/27 11:05:26 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/28 07:55:44 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,19 @@ void	ft_list_env(char **env, list_env **env_list)
     }
 }
 
-char **put_the_args(t_input *tok)
+char **put_the_args(t_input *tok, char *cmd)
 {
     char **args;
     int i = 0;
     int j = 0;
     t_input *tmp2;
+    t_input *tmp;
 
-    tmp2 = tok;
+    tmp = tok;
+    while (strcmp(tmp->value, cmd) != 0)
+        tmp = tmp->next;
+    tmp = tmp->next;
+    tmp2 = tmp;
     while(tmp2 && tmp2->type != PIPE)
     {
         i++;
@@ -60,15 +65,12 @@ char **put_the_args(t_input *tok)
     }
     args = (char **)malloc(sizeof(char *) * (i + 1));
     if (args == NULL)
-	{
         return (NULL);
-	}
-	tmp2 = tok;
-    while (tmp2  && tmp2->type != PIPE)
+    while (tmp  && tmp->type != PIPE)
     {
-        args[j] = ft_strdup(tmp2->value);
+        args[j] = ft_strdup(tmp->value);
         j++;
-        tmp2 = tmp2->next;
+        tmp = tmp->next;
     }
     args[j] = NULL;
     return (args);
@@ -127,7 +129,7 @@ void	list_commands(t_input *tok, t_command **cmd_list)
     {
         new_cmd = (t_command *)malloc(sizeof(t_command));
         new_cmd->cmd = ft_strdup((tok)->value);
-        new_cmd->args = put_the_args(tok);
+        new_cmd->args = put_the_args(tok, tok->value);
         new_cmd->inoutfile = check_derctions(new_cmd->args);
         new_cmd->next = NULL;
         if (*cmd_list == NULL)
@@ -164,7 +166,7 @@ int	main(int ac, char **av, char **env)
 		line = readline("minishell$ ");
 
 		if (!line)
-			return(printf("Exiting...\n"), 0);
+			return(printf("Exiting...\n"), 1);
 		if (strlen(line) > 0)
 		{
 			add_history(line);
@@ -173,6 +175,33 @@ int	main(int ac, char **av, char **env)
 			ft_list_env(env, &env_list);
 			expand_variables(&tok, env_list);
 			list_commands(tok, &cmd_list);
+
+            while(tok)
+            {
+                printf("value :%s\ntype;  %u\n", tok->value, tok->type);
+                tok=tok->next;
+            }
+            int j = 1;
+            while (cmd_list)
+            {
+                printf("command %d:\n", j);
+                printf("cmd :%s\n", cmd_list->cmd);
+                printf("args :");
+                for (size_t i = 0; cmd_list->args[i]; i++)
+                {
+                    printf("%s  ", cmd_list->args[i]);
+                }
+                printf("\n");
+                while(cmd_list->inoutfile)
+                {
+                    printf("filename :%s   type:%d\n",  cmd_list->inoutfile->filename, cmd_list->inoutfile->type);
+                    cmd_list->inoutfile = cmd_list->inoutfile->next;
+                }
+                cmd_list = cmd_list->next;
+                j++;
+            }
+
+            cmd_list = NULL;
 			pid_t pid = fork();
             if (pid == 0)
                 exit(1);
