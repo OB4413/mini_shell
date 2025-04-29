@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 08:06:45 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/27 08:05:07 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/29 08:56:15 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ char *ft_check_quote(char *str, list_env *env, char q)
 				if (str[i] == '$')
 				{
 					i++;
+					if (str[i] >= 48 && str[i] <= 57 && i++)
+						continue;
 					start = i;
 					while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 						i++;
@@ -121,6 +123,8 @@ void expand_variables(t_input **tok, list_env *env)
 				if (temp->value[i] == '$' && temp->value[i + 1] && temp->value[i + 1] != '?')
 				{
 					i++;
+					if (temp->value[i] >= 48 && temp->value[i] <= 57 && i++)
+						continue;
 					start = i;
 					while (temp->value[i] && (ft_isalnum(temp->value[i]) || temp->value[i] == '_'))
 						i++;

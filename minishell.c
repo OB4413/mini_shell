@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:56:34 by obarais           #+#    #+#             */
-/*   Updated: 2025/04/28 07:55:44 by obarais          ###   ########.fr       */
+/*   Updated: 2025/04/29 08:27:28 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,15 +172,11 @@ int	main(int ac, char **av, char **env)
 			add_history(line);
 
 			tokenization(line, &tok);
+            parsing_tokns(tok);
 			ft_list_env(env, &env_list);
 			expand_variables(&tok, env_list);
 			list_commands(tok, &cmd_list);
 
-            while(tok)
-            {
-                printf("value :%s\ntype;  %u\n", tok->value, tok->type);
-                tok=tok->next;
-            }
             int j = 1;
             while (cmd_list)
             {
@@ -202,6 +198,7 @@ int	main(int ac, char **av, char **env)
             }
 
             cmd_list = NULL;
+            tok = NULL;
 			pid_t pid = fork();
             if (pid == 0)
                 exit(1);
